@@ -73,5 +73,5 @@ def consultar_sala():
                     }
                 ]
             }
-
+    return Response(json.dumps(resp), status=200, mimetype="application/json")
 #from app.controllers import redirect
