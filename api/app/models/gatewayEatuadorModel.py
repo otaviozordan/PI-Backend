@@ -46,3 +46,52 @@ class Atuador():
         if x.modified_count:
             return 0
         return 1
+    
+def carregar_por_id_sensor_e_sala(cls, id_sala, id_sensor):
+    filtro = {"sala_id": id_sala, "atuadores.nome": id_sensor}
+    atuador_encontrado = mongoDB.Salas.find_one(filtro, {"atuadores.$": 1})
+
+    if atuador_encontrado:
+        atuador_info = atuador_encontrado['atuadores'][0]
+        atuador = cls(
+            nome=atuador_info['nome'],
+            tipo=atuador_info['tipo'],
+            descricao=atuador_info['descricao'],
+            automatico=atuador_info['automatico'],
+            rotina=atuador_info['rotina'],
+            estado=atuador_info['estado'],
+            id=id_sensor
+        )
+        return atuador
+    else:
+        return None
+    
+
+resp = {
+            'email':'athos@gmail.com', 
+            'sensores':[
+                {
+                    "nome":"temperatura",
+                    "id":"ABCDEFGH",
+                    "estado":23
+                },
+                {
+                    "nome":"ldr",
+                    "id":"ABCDEFGH",
+                    "estado":1234
+                }
+            ],
+            'atuadores':[
+                {
+                    "nome":"rele1",
+                    "id":"ABCDEFGH",
+                    "rotina":"automatico",
+                    "estado":True
+                },           
+                {
+                    "nome":"rele2",
+                    "rotina":"manual",
+                    "estado":False
+                }
+            ]
+        }
