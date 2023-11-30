@@ -5,11 +5,11 @@ from flask import Blueprint, request, jsonify
 def fazer_login():
     data = request.get_json()
     username = data.get('username')
-    senha = data.get('senha')
+    password = data.get('password')
 
-    if username and senha:
+    if username and password:
         # Verificar se o usuário e a senha correspondem (sem hash)
-        usuario = users_collection.find_one({'username': username, 'senha': senha})
+        usuario = users_collection.find_one({'username': username, 'password': password})
         
         if usuario:
             return jsonify({'mensagem': 'Login feito com sucesso!!!'}), 200
